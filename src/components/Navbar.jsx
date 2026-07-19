@@ -12,56 +12,40 @@ const links = [
   { name: "Contact", href: "#contact", id: "contact" },
 ];
 
-
 export default function Navbar() {
 
-  const [open,setOpen] = useState(false);
-  const [scrolled,setScrolled] = useState(false);
-  const [activeSection,setActiveSection] = useState("home");
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
   const scrolling = useRef(false);
 
 
-  useEffect(()=>{
+  useEffect(() => {
 
-    const handleScroll=()=>{
-
+    const handleScroll = () => {
       setScrolled(window.scrollY > 20);
-
     };
 
+    window.addEventListener("scroll", handleScroll);
 
-    window.addEventListener(
-      "scroll",
-      handleScroll
-    );
+    return () =>
+      window.removeEventListener("scroll", handleScroll);
 
-
-    return ()=>window.removeEventListener(
-      "scroll",
-      handleScroll
-    );
-
-
-  },[]);
+  }, []);
 
 
 
-  useEffect(()=>{
-
+  useEffect(() => {
 
     const observer = new IntersectionObserver(
-      (entries)=>{
 
-        entries.forEach(entry=>{
+      (entries) => {
 
-          if(
-            entry.isIntersecting &&
-            !scrolling.current
-          ){
+        entries.forEach(entry => {
 
+          if(entry.isIntersecting && !scrolling.current){
             setActiveSection(entry.target.id);
-
           }
 
         });
@@ -70,14 +54,13 @@ export default function Navbar() {
       {
         rootMargin:"-30% 0px -60% 0px"
       }
+
     );
 
 
-    links.forEach(link=>{
+    links.forEach(link => {
 
-      const section =
-      document.getElementById(link.id);
-
+      const section = document.getElementById(link.id);
 
       if(section){
         observer.observe(section);
@@ -86,35 +69,30 @@ export default function Navbar() {
     });
 
 
-    return ()=>observer.disconnect();
+    return () => observer.disconnect();
 
 
   },[]);
 
 
 
-  const scrollToSection=(e,id)=>{
+  const scrollToSection = (e,id)=>{
 
     e.preventDefault();
 
-    const section =
-    document.getElementById(id);
-
+    const section = document.getElementById(id);
 
     if(section){
 
-      scrolling.current=true;
+      scrolling.current = true;
 
       setActiveSection(id);
-
       setOpen(false);
 
 
       window.scrollTo({
 
-        top:
-        section.offsetTop - 80,
-
+        top: section.offsetTop - 80,
         behavior:"smooth"
 
       });
@@ -134,240 +112,251 @@ export default function Navbar() {
 
   return (
 
-    <header
-      className={`
-      fixed
-      top-0
-      left-0
-      w-full
-      h-20
-      z-[99999]
-      transition-all
-      duration-300
+<header
+className={`
+fixed
+top-0
+left-0
+w-full
+h-20
+z-[99999]
+transition-all
+duration-300
 
-      ${
-        scrolled || open
-        ?
-        "bg-[#0B1120]/95 backdrop-blur-xl border-b border-white/10"
-        :
-        "bg-transparent"
-      }
-      `}
-    >
+${
+scrolled || open
+?
+"bg-[#0B1120]/95 backdrop-blur-xl border-b border-white/10"
+:
+"bg-transparent"
+}
+
+`}
+>
+
+
+<div
+className="
+max-w-7xl
+mx-auto
+h-full
+px-5
+flex
+items-center
+justify-between
+"
+>
+
+
+{/* LOGO */}
+
+<a
+href="#home"
+onClick={(e)=>scrollToSection(e,"home")}
+>
 
+<img
+src="/logoo.png"
+alt="logo"
+className="
+w-16
+sm:w-20
+h-auto
+object-contain
+"
+/>
 
-      <div
-        className="
-        max-w-7xl
-        mx-auto
-        h-full
-        px-5
-        flex
-        items-center
-        justify-between
-        "
-      >
-
-
-
-        {/* LOGO */}
-
-        <a
-          href="#home"
-          onClick={(e)=>scrollToSection(e,"home")}
-        >
+</a>
 
-          <img
-            src="/logoo.png"
-            alt="logo"
-            className="
-            w-16
-            sm:w-20
-            h-auto
-            object-contain
-            "
-          />
 
-        </a>
 
+{/* DESKTOP MENU */}
 
+<nav
+className="
+hidden
+lg:flex
+items-center
+gap-6
+"
+>
 
+{
+links.map(link=>(
 
+<a
+key={link.id}
+href={link.href}
+onClick={(e)=>scrollToSection(e,link.id)}
+className={`
+text-sm
+font-medium
 
-        {/* DESKTOP */}
+${
+activeSection===link.id
+?
+"text-blue-400"
+:
+"text-gray-300 hover:text-white"
+}
 
-        <nav
-          className="
-          hidden
-          lg:flex
-          items-center
-          gap-6
-          "
-        >
+`}
+>
 
-          {
-            links.map(link=>(
+{link.name}
 
-              <a
-                key={link.id}
-                href={link.href}
-                onClick={(e)=>scrollToSection(e,link.id)}
-                className={`
-                text-sm
-                font-medium
+</a>
 
-                ${
-                  activeSection===link.id
-                  ?
-                  "text-blue-400"
-                  :
-                  "text-gray-300 hover:text-white"
-                }
-                `}
-              >
+))
+}
 
-                {link.name}
+</nav>
 
-              </a>
 
-            ))
-          }
 
 
-        </nav>
 
+{/* MOBILE BUTTON */}
 
+<button
 
+onClick={()=>setOpen(!open)}
 
+className="
+lg:hidden
+relative
+z-[100001]
+flex
+items-center
+justify-center
+text-4xl
+text-white
+bg-[#111827]
+border
+border-white/10
+p-3
+rounded-xl
+mr-1
+"
 
-        {/* MOBILE BUTTON */}
+>
 
-        <button
+{
 
-          onClick={()=>setOpen(!open)}
+open
+?
+<HiX/>
+:
+<HiMenu/>
 
-          className="
-          lg:hidden
-          relative
-          z-[100001]
-          flex
-          items-center
-          justify-center
-          text-3xl
-          text-white
-          bg-[#111827]
-          border
-          border-white/10
-          p-3
-          rounded-xl
-          "
+}
 
-        >
+</button>
 
-          {
-            open
-            ?
-            <HiX/>
-            :
-            <HiMenu/>
-          }
 
 
-        </button>
+</div>
 
 
 
-      </div>
 
 
+{/* MOBILE MENU */}
 
+<AnimatePresence>
 
+{
 
-      {/* MOBILE MENU */}
+open && (
 
+<motion.div
 
-      <AnimatePresence>
+initial={{
+opacity:0,
+y:-20
+}}
 
-      {
-        open && (
+animate={{
+opacity:1,
+y:0
+}}
 
-          <motion.div
+exit={{
+opacity:0,
+y:-20
+}}
 
-          initial={{
-            opacity:0,
-            y:-20
-          }}
+className="
+fixed
+top-20
+left-4
+w-[calc(100%-2rem)]
+min-h-screen
+z-[99998]
+bg-[#0B1120]/95
+backdrop-blur-xl
+rounded-xl
+"
 
-          animate={{
-            opacity:1,
-            y:0
-          }}
+>
 
-          exit={{
-            opacity:0,
-            y:-20
-          }}
 
-          className="
-          fixed
-          top-20
-          left-0
-          w-full
-          min-h-screen
-          z-[99998]
-          bg-[#0B1120]/95
-          backdrop-blur-xl
-          "
-          >
+<div
+className="
+flex
+flex-col
+gap-4
+p-6
+"
+>
 
-            <div
-            className="
-            flex
-            flex-col
-            gap-4
-            p-6
-            "
-            >
 
+{
 
-            {
-              links.map(link=>(
+links.map(link=>(
 
-                <a
-                key={link.id}
-                href={link.href}
-                onClick={(e)=>scrollToSection(e,link.id)}
-                className="
-                text-xl
-                text-gray-200
-                py-4
-                px-5
-                rounded-xl
-                hover:bg-white/10
-                "
-                >
+<a
 
-                  {link.name}
+key={link.id}
 
-                </a>
+href={link.href}
 
+onClick={(e)=>scrollToSection(e,link.id)}
 
-              ))
-            }
+className="
+text-xl
+text-gray-200
+py-4
+px-5
+rounded-xl
+hover:bg-white/10
+"
 
+>
 
-            </div>
+{link.name}
 
+</a>
 
-          </motion.div>
+))
 
-        )
-      }
+}
 
-      </AnimatePresence>
 
+</div>
 
-    </header>
+
+</motion.div>
+
+)
+
+}
+
+</AnimatePresence>
+
+
+
+</header>
 
   );
 }
