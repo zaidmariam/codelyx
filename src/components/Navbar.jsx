@@ -12,21 +12,22 @@ const links = [
   { name: "Contact", href: "#contact", id: "contact" },
 ];
 
+
 export default function Navbar() {
 
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
+  const [open,setOpen] = useState(false);
+  const [scrolled,setScrolled] = useState(false);
+  const [activeSection,setActiveSection] = useState("home");
 
-  const isScrolling = useRef(false);
+  const scrolling = useRef(false);
 
 
+  useEffect(()=>{
 
-  // Scroll background
-  useEffect(() => {
+    const handleScroll=()=>{
 
-    const handleScroll = () => {
       setScrolled(window.scrollY > 20);
+
     };
 
 
@@ -36,28 +37,28 @@ export default function Navbar() {
     );
 
 
-    return () => {
-      window.removeEventListener(
-        "scroll",
-        handleScroll
-      );
-    };
+    return ()=>window.removeEventListener(
+      "scroll",
+      handleScroll
+    );
 
-  }, []);
 
+  },[]);
 
 
 
-  // Active section
-  useEffect(() => {
+  useEffect(()=>{
 
 
     const observer = new IntersectionObserver(
       (entries)=>{
 
-        entries.forEach((entry)=>{
+        entries.forEach(entry=>{
 
-          if(entry.isIntersecting && !isScrolling.current){
+          if(
+            entry.isIntersecting &&
+            !scrolling.current
+          ){
 
             setActiveSection(entry.target.id);
 
@@ -67,14 +68,12 @@ export default function Navbar() {
 
       },
       {
-        rootMargin:"-30% 0px -60% 0px",
-        threshold:0
+        rootMargin:"-30% 0px -60% 0px"
       }
     );
 
 
-
-    links.forEach((link)=>{
+    links.forEach(link=>{
 
       const section =
       document.getElementById(link.id);
@@ -87,23 +86,16 @@ export default function Navbar() {
     });
 
 
-
     return ()=>observer.disconnect();
 
 
-  }, []);
+  },[]);
 
 
 
-
-  // Smooth scroll function
-  const handleScrollTo = (
-    e,
-    id
-  )=>{
+  const scrollToSection=(e,id)=>{
 
     e.preventDefault();
-
 
     const section =
     document.getElementById(id);
@@ -111,38 +103,28 @@ export default function Navbar() {
 
     if(section){
 
-      isScrolling.current = true;
+      scrolling.current=true;
 
       setActiveSection(id);
 
       setOpen(false);
 
 
-      const offset = 90;
-
-
-      const position =
-      section.getBoundingClientRect().top +
-      window.scrollY -
-      offset;
-
-
-
       window.scrollTo({
 
-        top:position,
+        top:
+        section.offsetTop - 80,
 
         behavior:"smooth"
 
       });
 
 
-
       setTimeout(()=>{
 
-        isScrolling.current=false;
+        scrolling.current=false;
 
-      },800);
+      },700);
 
     }
 
@@ -150,51 +132,19 @@ export default function Navbar() {
 
 
 
-
-  // Close menu on resize
-  useEffect(()=>{
-
-    const resize = ()=>{
-
-      if(window.innerWidth >= 1024){
-
-        setOpen(false);
-
-      }
-
-    };
-
-
-    window.addEventListener(
-      "resize",
-      resize
-    );
-
-
-    return ()=>{
-
-      window.removeEventListener(
-        "resize",
-        resize
-      );
-
-    };
-
-
-  },[]);
-
-
-
   return (
+
     <header
       className={`
       fixed
       top-0
       left-0
       w-full
-      z-[10000]
+      h-20
+      z-[99999]
       transition-all
       duration-300
+
       ${
         scrolled || open
         ?
@@ -204,39 +154,37 @@ export default function Navbar() {
       }
       `}
     >
-            <div
+
+
+      <div
         className="
         max-w-7xl
         mx-auto
-        px-4
-        sm:px-6
-        lg:px-8
-        h-16
-        sm:h-20
+        h-full
+        px-5
         flex
         items-center
         justify-between
         "
       >
 
+
+
         {/* LOGO */}
 
         <a
           href="#home"
-          onClick={(e)=>handleScrollTo(e,"home")}
+          onClick={(e)=>scrollToSection(e,"home")}
         >
 
           <img
             src="/logoo.png"
-            alt="Logo"
+            alt="logo"
             className="
-            h-10
-            sm:h-12
-            lg:h-16
-            w-auto
+            w-16
+            sm:w-20
+            h-auto
             object-contain
-            hover:scale-105
-            transition
             "
           />
 
@@ -244,7 +192,9 @@ export default function Navbar() {
 
 
 
-        {/* DESKTOP MENU */}
+
+
+        {/* DESKTOP */}
 
         <nav
           className="
@@ -255,99 +205,33 @@ export default function Navbar() {
           "
         >
 
-          <div
-            className="
-            flex
-            gap-6
-            bg-[#111827]/50
-            border
-            border-white/10
-            px-6
-            py-2
-            rounded-full
-            backdrop-blur
-            "
-          >
+          {
+            links.map(link=>(
 
-            {
-              links.map((link)=>{
+              <a
+                key={link.id}
+                href={link.href}
+                onClick={(e)=>scrollToSection(e,link.id)}
+                className={`
+                text-sm
+                font-medium
 
-                const active =
-                activeSection === link.id;
+                ${
+                  activeSection===link.id
+                  ?
+                  "text-blue-400"
+                  :
+                  "text-gray-300 hover:text-white"
+                }
+                `}
+              >
 
+                {link.name}
 
-                return (
+              </a>
 
-                  <a
-                    key={link.id}
-                    href={link.href}
-                    onClick={(e)=>handleScrollTo(e,link.id)}
-                    className={`
-                    relative
-                    text-sm
-                    font-medium
-                    transition
-                    ${
-                      active
-                      ?
-                      "text-blue-400"
-                      :
-                      "text-gray-400 hover:text-white"
-                    }
-                    `}
-                  >
-
-                    {link.name}
-
-
-                    {
-                      active && (
-
-                        <motion.span
-                          layoutId="active"
-                          className="
-                          absolute
-                          left-0
-                          right-0
-                          -bottom-1
-                          h-[2px]
-                          bg-blue-500
-                          rounded-full
-                          "
-                        />
-
-                      )
-                    }
-
-
-                  </a>
-
-                );
-
-              })
-            }
-
-          </div>
-
-
-
-          <a
-            href="#contact"
-            onClick={(e)=>handleScrollTo(e,"contact")}
-            className="
-            bg-blue-600
-            hover:bg-blue-500
-            text-white
-            px-6
-            py-2.5
-            rounded-full
-            font-semibold
-            text-sm
-            transition
-            "
-          >
-            Let's Talk
-          </a>
+            ))
+          }
 
 
         </nav>
@@ -359,19 +243,25 @@ export default function Navbar() {
         {/* MOBILE BUTTON */}
 
         <button
+
           onClick={()=>setOpen(!open)}
+
           className="
           lg:hidden
+          relative
+          z-[100001]
+          flex
+          items-center
+          justify-center
           text-3xl
-          text-gray-300
-          bg-[#111827]/70
+          text-white
+          bg-[#111827]
           border
           border-white/10
-          p-2
+          p-3
           rounded-xl
-          cursor-pointer
           "
-          aria-label="menu"
+
         >
 
           {
@@ -382,7 +272,9 @@ export default function Navbar() {
             <HiMenu/>
           }
 
+
         </button>
+
 
 
       </div>
@@ -396,132 +288,81 @@ export default function Navbar() {
 
       <AnimatePresence>
 
-        {
-          open && (
+      {
+        open && (
 
-            <motion.div
+          <motion.div
 
-              initial={{
-                opacity:0,
-                y:-20
-              }}
+          initial={{
+            opacity:0,
+            y:-20
+          }}
 
-              animate={{
-                opacity:1,
-                y:0
-              }}
+          animate={{
+            opacity:1,
+            y:0
+          }}
 
-              exit={{
-                opacity:0,
-                y:-20
-              }}
+          exit={{
+            opacity:0,
+            y:-20
+          }}
 
-              transition={{
-                duration:.25
-              }}
+          className="
+          fixed
+          top-20
+          left-0
+          w-full
+          min-h-screen
+          z-[99998]
+          bg-[#0B1120]/95
+          backdrop-blur-xl
+          "
+          >
 
-              className="
-              lg:hidden
-              absolute
-              top-full
-              left-0
-              w-full
-              z-[9999]
-              bg-[#0B1120]/95
-              backdrop-blur-xl
-              border-t
-              border-white/10
-              "
-
+            <div
+            className="
+            flex
+            flex-col
+            gap-4
+            p-6
+            "
             >
 
 
-              <div
-                className="
-                flex
-                flex-col
-                gap-2
-                px-5
-                py-6
-                "
-              >
-
-
-                {
-                  links.map((link)=>{
-
-
-                    const active =
-                    activeSection === link.id;
-
-
-
-                    return (
-
-                      <a
-                        key={link.id}
-                        href={link.href}
-                        onClick={(e)=>handleScrollTo(e,link.id)}
-                        className={`
-                        block
-                        w-full
-                        px-4
-                        py-3
-                        rounded-xl
-                        text-base
-                        transition
-                        ${
-                          active
-                          ?
-                          "text-blue-400 bg-blue-500/10"
-                          :
-                          "text-gray-300 hover:text-white hover:bg-white/5"
-                        }
-                        `}
-                      >
-
-                        {link.name}
-
-                      </a>
-
-                    );
-
-
-                  })
-                }
-
-
+            {
+              links.map(link=>(
 
                 <a
-                  href="#contact"
-                  onClick={(e)=>handleScrollTo(e,"contact")}
-                  className="
-                  mt-3
-                  text-center
-                  bg-blue-600
-                  hover:bg-blue-500
-                  text-white
-                  py-3
-                  rounded-xl
-                  font-semibold
-                  transition
-                  "
+                key={link.id}
+                href={link.href}
+                onClick={(e)=>scrollToSection(e,link.id)}
+                className="
+                text-xl
+                text-gray-200
+                py-4
+                px-5
+                rounded-xl
+                hover:bg-white/10
+                "
                 >
 
-                  Let's Talk
+                  {link.name}
 
                 </a>
 
 
+              ))
+            }
 
-              </div>
+
+            </div>
 
 
-            </motion.div>
+          </motion.div>
 
-          )
-        }
-
+        )
+      }
 
       </AnimatePresence>
 
@@ -529,5 +370,4 @@ export default function Navbar() {
     </header>
 
   );
-
 }
