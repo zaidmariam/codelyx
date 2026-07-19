@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FaGithub, FaInstagram, FaLinkedin, FaArrowRight } from "react-icons/fa";
+import { FaGithub, FaInstagram, FaArrowRight } from "react-icons/fa";
 
 export default function Hero() {
 
@@ -355,7 +355,7 @@ export default function Hero() {
 
             <motion.a
               variants={iconAnimation}
-              href="https://github.com"
+              href="https://github.com/zaidmariam"
               whileHover={{
                 y:-8,
                 scale:1.2
@@ -368,7 +368,7 @@ export default function Hero() {
 
             <motion.a
               variants={iconAnimation}
-              href="https://instagram.com"
+              href="https://instagram.com/codelyx.dev"
               whileHover={{
                 y:-8,
                 scale:1.2
@@ -376,21 +376,6 @@ export default function Hero() {
             >
               <FaInstagram/>
             </motion.a>
-
-
-
-
-            <motion.a
-              variants={iconAnimation}
-              href="https://linkedin.com"
-              whileHover={{
-                y:-8,
-                scale:1.2
-              }}
-            >
-              <FaLinkedin/>
-            </motion.a>
-
 
           </motion.div>
 

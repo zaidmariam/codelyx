@@ -67,7 +67,7 @@ export default function Navbar() {
           <img
             src="/logoo.png"
             alt="Codelyx Logo"
-           className="h-14 md:h-16 w-auto object-contain scale-125 transition-all duration-300 group-hover:scale-[1.3]"
+            className="h-14 md:h-16 w-auto object-contain scale-125 transition-all duration-300 group-hover:scale-[1.3]"
           />
         </a>
 
@@ -107,7 +107,7 @@ export default function Navbar() {
             href="#contact"
             className="relative overflow-hidden bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm px-6 py-2.5 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(59,130,246,0.2)] hover:shadow-[0_0_25px_rgba(59,130,246,0.45)] hover:scale-[1.02]"
           >
-            Hire Me
+              Let's Talk
           </a>
         </nav>
 
@@ -155,7 +155,7 @@ export default function Navbar() {
                 onClick={() => setOpen(false)}
                 className="mt-2 text-center bg-blue-600 hover:bg-blue-500 py-3 rounded-xl text-white font-semibold transition"
               >
-                Hire Me
+                Let's Talk
               </a>
             </div>
           </motion.div>

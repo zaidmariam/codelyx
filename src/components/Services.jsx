@@ -27,17 +27,17 @@ const services = [
       "Tailor-made software solutions designed to solve your unique business bottlenecks and automate operations with high performance.",
   },
   {
-    icon: <FaCloudDownloadAlt className="text-3xl text-cyan-400" />,
-    title: "REST API Development",
-    description:
-      "Design and implementation of secure, clean, and scalable APIs to power your mobile applications, frontend portals, and third-party integrations.",
-  },
-  {
-    icon: <FaTools className="text-3xl text-blue-500" />,
-    title: "Website Maintenance",
-    description:
-      "Proactive optimization, routine bug fixes, security audits, database backups, and hosting management to keep your platform online 24/7.",
-  },
+  icon: <FaCloudDownloadAlt className="text-3xl text-cyan-400" />,
+  title: "REST API Development",
+  description:
+    "Design and development of secure, scalable REST APIs for web applications, admin dashboards, and third-party service integrations.",
+},
+ {
+  icon: <FaTools className="text-3xl text-blue-500" />,
+  title: "Website Maintenance",
+  description:
+    "Ongoing website maintenance including bug fixes, performance optimization, security updates, database management, and feature enhancements.",
+},
 ];
 
 export default function Services() {
@@ -78,9 +78,9 @@ export default function Services() {
           </div>
 
           <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mt-2 leading-tight">
-            High-Performance solutions <br />
+            Modern web solutions <br />
             <span className="bg-gradient-to-r from-blue-400 via-sky-400 to-indigo-500 bg-clip-text text-transparent">
-              tailored to your exact business needs.
+              built for performance, scalability, and business growth.
             </span>
           </h2>
         </motion.div>

@@ -1,148 +1,305 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { FaPaperPlane, FaCheckCircle } from "react-icons/fa";
+import { useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import emailjs from "@emailjs/browser";
+
+import {
+  FaGithub,
+  FaInstagram,
+  FaPaperPlane,
+  FaCheckCircle,
+} from "react-icons/fa";
+
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+} from "lucide-react";
 
 export default function Contact() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [status, setStatus] = useState("idle"); // idle | sending | success
+  const formRef = useRef();
 
-  const handleSubmit = (e) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const [status, setStatus] = useState("idle");
+  const [toast, setToast] = useState(null);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!name || !email || !message) return;
-    
+
     setStatus("sending");
-    setTimeout(() => {
+
+    try {
+      await emailjs.sendForm(
+        "service_xdqliwh",
+        "template_f4qfibe",
+        formRef.current,
+        "Plt4YIUVD6W_r0jTm"
+      );
+
       setStatus("success");
-      setName("");
-      setEmail("");
-      setMessage("");
-      setTimeout(() => setStatus("idle"), 5000);
-    }, 1500);
+
+      setFormData({
+        name: "",
+        email: "",
+        message: "",
+      });
+
+      setToast({
+        type: "success",
+        message: "Your message has been sent successfully.",
+      });
+
+      setTimeout(() => {
+        setToast(null);
+      }, 4000);
+    } catch (err) {
+      console.log(err);
+
+      setStatus("idle");
+
+      setToast({
+        type: "error",
+        message: "Something went wrong. Please try again.",
+      });
+
+      setTimeout(() => {
+        setToast(null);
+      }, 4000);
+    }
   };
 
   return (
-    <section id="contact" className="py-28 bg-[#0F172A]/50 text-white relative overflow-hidden">
-      {/* Decorative ambient background blobs */}
-      <div className="absolute w-[450px] h-[450px] bg-blue-600/[0.02] rounded-full blur-[100px] -left-20 bottom-0 pointer-events-none" />
-      <div className="absolute w-[350px] h-[350px] bg-sky-500/[0.02] rounded-full blur-[80px] -right-20 top-0 pointer-events-none" />
+    <section
+      id="contact"
+      className="relative py-28 bg-[#0B1120] overflow-hidden text-white"
+    >
+      {/* Background Glow */}
+      <div className="absolute left-0 bottom-0 w-[450px] h-[450px] rounded-full bg-blue-500/5 blur-[150px]" />
+      <div className="absolute right-0 top-0 w-[450px] h-[450px] rounded-full bg-sky-500/5 blur-[150px]" />
 
-      <div className="max-w-3xl mx-auto px-6 relative z-10 text-center">
-        {/* Title */}
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="mb-14"
+          viewport={{ once: true }}
+          transition={{ duration: .6 }}
+          className="text-center mb-20"
         >
-          <div className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-xs font-semibold tracking-wider text-blue-400 mb-4">
-            CONTACT ME
-          </div>
+          <span className="px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-semibold">
+            CONTACT
+          </span>
 
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mt-2 leading-tight max-w-xl mx-auto">
-            Let's Build Something <br />
-            <span className="bg-gradient-to-r from-blue-400 to-sky-400 bg-clip-text text-transparent">
-              Amazing Together.
-            </span>
+          <h2 className="text-4xl md:text-5xl font-bold mt-6">
+            Let's Work Together
           </h2>
 
-          <p className="text-gray-400 mt-4 text-base max-w-md mx-auto">
-            Have a project in mind, a job opportunity, or just want to connect? Send a message and let's get started.
+          <p className="text-gray-400 mt-5 max-w-2xl mx-auto">
+            Have a project in mind or looking for a developer?
+            I'd love to hear from you.
           </p>
         </motion.div>
 
-        {/* Contact Form Wrapper */}
+        <div className="grid lg:grid-cols-2 gap-10">
+          {/* LEFT CARD */}
+<motion.div
+  initial={{ opacity: 0, x: -30 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.6 }}
+  className="bg-[#111827]/60 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col justify-between"
+>
+  <div>
+    <h3 className="text-2xl font-bold mb-8">
+      Contact Information
+    </h3>
+
+    <div className="space-y-7">
+
+  {/* Email */}
+  <div className="flex items-center gap-5">
+    <div className="h-14 w-14 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-400">
+      <Mail size={22} />
+    </div>
+
+    <div>
+      <p className="text-gray-500 text-sm">Email</p>
+      <p className="font-semibold">codelyx.dev@gmail.com</p>
+    </div>
+  </div>
+
+  {/* Phone */}
+  <div className="flex items-center gap-5">
+    <div className="h-14 w-14 rounded-2xl bg-sky-500/10 flex items-center justify-center text-sky-400">
+      <Phone size={22} />
+    </div>
+
+    <div>
+      <p className="text-gray-500 text-sm">Phone</p>
+      <p className="font-semibold">+212 718-144877</p>
+    </div>
+  </div>
+  {/* GitHub */}
+  <a
+    href="https://github.com/zaidmariam"
+    target="_blank"
+    rel="noreferrer"
+    className="flex items-center gap-5 hover:translate-x-1 transition"
+  >
+    <div className="h-14 w-14 rounded-2xl bg-white/5 flex items-center justify-center text-white">
+      <FaGithub size={22} />
+    </div>
+
+    <div>
+      <p className="text-gray-500 text-sm">GitHub</p>
+      <p className="font-semibold">github.com/zaidmariam</p>
+    </div>
+  </a>
+
+  {/* Instagram */}
+  <a
+    href="https://instagram.com/codelyx.dev"
+    target="_blank"
+    rel="noreferrer"
+    className="flex items-center gap-5 hover:translate-x-1 transition"
+  >
+    <div className="h-14 w-14 rounded-2xl bg-pink-500/10 flex items-center justify-center text-pink-400">
+      <FaInstagram size={22} />
+    </div>
+
+    <div>
+      <p className="text-gray-500 text-sm">Instagram</p>
+      <p className="font-semibold">@codelyx.dev</p>
+    </div>
+  </a>
+
+</div>
+  </div>
+</motion.div>
+
+{/* RIGHT CARD */}
+<motion.div
+  initial={{ opacity: 0, x: 30 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.6 }}
+  className="bg-[#111827]/60 backdrop-blur-xl border border-white/10 rounded-3xl p-8"
+>
+  <form
+    ref={formRef}
+    onSubmit={handleSubmit}
+    className="space-y-6"
+  >
+
+    <input
+      type="text"
+      name="name"
+      placeholder="Your Name"
+      value={formData.name}
+      onChange={handleChange}
+      className="w-full bg-[#0B1120] border border-white/10 rounded-xl px-5 py-4 outline-none focus:border-blue-500"
+      required
+    />
+
+    <input
+      type="email"
+      name="email"
+      placeholder="Email Address"
+      value={formData.email}
+      onChange={handleChange}
+      className="w-full bg-[#0B1120] border border-white/10 rounded-xl px-5 py-4 outline-none focus:border-blue-500"
+      required
+    />
+
+
+    <textarea
+      rows="6"
+      name="message"
+      placeholder="Write your message..."
+      value={formData.message}
+      onChange={handleChange}
+      className="w-full resize-none bg-[#0B1120] border border-white/10 rounded-xl px-5 py-4 outline-none focus:border-blue-500"
+      required
+    />
+        <motion.button
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      type="submit"
+      disabled={status === "sending"}
+      className="w-full bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800 transition-all duration-300 rounded-xl py-4 font-semibold flex items-center justify-center gap-3 shadow-[0_0_25px_rgba(59,130,246,0.25)]"
+    >
+      {status === "sending" ? (
+        <>
+          <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+          Sending...
+        </>
+      ) : (
+        <>
+          <Send size={18} />
+          Send Message
+        </>
+      )}
+    </motion.button>
+
+    {/* Success Message */}
+    <AnimatePresence>
+      {status === "success" && (
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="bg-[#0B1120]/60 border border-white/5 p-8 sm:p-10 rounded-3xl backdrop-blur-md shadow-[0_20px_50px_rgba(0,0,0,0.3)] text-left max-w-xl mx-auto relative overflow-hidden"
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 15 }}
+          className="mt-6 rounded-xl bg-emerald-500/10 border border-emerald-500/30 p-4 flex items-center gap-3"
         >
-          {status === "success" ? (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="flex flex-col items-center justify-center py-12 text-center"
-            >
-              <FaCheckCircle className="text-5xl text-emerald-400 mb-4 animate-bounce" />
-              <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
-              <p className="text-gray-400 text-sm max-w-xs leading-relaxed">
-                Thank you for reaching out. I'll get back to you within 24 hours.
-              </p>
-            </motion.div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">
-                  Your Name
-                </label>
-                <input
-                  id="name"
-                  type="text"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="John Doe"
-                  className="w-full bg-[#0B1120] border border-white/5 focus:border-blue-500/40 text-white placeholder-gray-600 rounded-xl px-5 py-4 outline-none transition-all duration-300 text-sm focus:ring-1 focus:ring-blue-500/30"
-                />
-              </div>
+          <FaCheckCircle className="text-emerald-400 text-xl" />
 
-              <div>
-                <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">
-                  Email Address
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="john@example.com"
-                  className="w-full bg-[#0B1120] border border-white/5 focus:border-blue-500/40 text-white placeholder-gray-600 rounded-xl px-5 py-4 outline-none transition-all duration-300 text-sm focus:ring-1 focus:ring-blue-500/30"
-                />
-              </div>
+          <div>
+            <h4 className="font-semibold text-emerald-400">
+              Message Sent Successfully
+            </h4>
 
-              <div>
-                <label htmlFor="message" className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">
-                  Your Message
-                </label>
-                <textarea
-                  id="message"
-                  required
-                  rows="5"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Describe your project idea in detail..."
-                  className="w-full bg-[#0B1120] border border-white/5 focus:border-blue-500/40 text-white placeholder-gray-600 rounded-xl px-5 py-4 outline-none transition-all duration-300 text-sm focus:ring-1 focus:ring-blue-500/30 resize-none"
-                />
-              </div>
-
-              <motion.button
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
-                type="submit"
-                disabled={status === "sending"}
-                className="w-full bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800 text-white font-semibold py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(59,130,246,0.2)] hover:shadow-[0_0_30px_rgba(59,130,246,0.4)]"
-              >
-                {status === "sending" ? (
-                  <>
-                    <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    Sending Message...
-                  </>
-                ) : (
-                  <>
-                    <FaPaperPlane className="text-xs" />
-                    Send Message
-                  </>
-                )}
-              </motion.button>
-            </form>
-          )}
+            <p className="text-sm text-gray-300">
+              Thank you! I'll get back to you as soon as possible.
+            </p>
+          </div>
         </motion.div>
+      )}
+    </AnimatePresence>
+
+  </form>
+</motion.div>
+
+        </div>
       </div>
+
+      {/* Toast */}
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 40 }}
+            className={`fixed bottom-6 right-6 px-6 py-4 rounded-2xl shadow-xl backdrop-blur-lg border z-50 ${
+              toast.type === "success"
+                ? "bg-emerald-500/15 border-emerald-500/30 text-emerald-300"
+                : "bg-red-500/15 border-red-500/30 text-red-300"
+            }`}
+          >
+            {toast.message}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

@@ -26,7 +26,7 @@ export default function Footer() {
         {/* Social Links */}
         <div className="flex items-center gap-5 text-gray-400 text-xl md:order-3">
           <a
-            href="https://github.com"
+            href="https://github.com/zaidmariam"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white transition-colors duration-300 hover:scale-110 transform"
@@ -35,22 +35,13 @@ export default function Footer() {
             <FaGithub />
           </a>
           <a
-            href="https://instagram.com"
+            href="https://instagram.com/codelyx.dev"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white transition-colors duration-300 hover:scale-110 transform"
             aria-label="Instagram"
           >
             <FaInstagram />
-          </a>
-          <a
-            href="https://linkedin.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-white transition-colors duration-300 hover:scale-110 transform"
-            aria-label="LinkedIn"
-          >
-            <FaLinkedin />
           </a>
         </div>
       </div>
