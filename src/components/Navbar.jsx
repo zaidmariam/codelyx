@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { HiMenu, HiX } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -13,239 +13,521 @@ const links = [
 ];
 
 export default function Navbar() {
+
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
 
+  const isScrolling = useRef(false);
+
+
+
+  // Scroll background
   useEffect(() => {
+
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
 
-    window.addEventListener("scroll", handleScroll);
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener(
+      "scroll",
+      handleScroll
+    );
+
+
+    return () => {
+      window.removeEventListener(
+        "scroll",
+        handleScroll
+      );
+    };
+
   }, []);
 
+
+
+
+  // Active section
   useEffect(() => {
+
+
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+      (entries)=>{
+
+        entries.forEach((entry)=>{
+
+          if(entry.isIntersecting && !isScrolling.current){
+
             setActiveSection(entry.target.id);
+
           }
+
         });
+
       },
       {
-        rootMargin: "-30% 0px -60% 0px",
-        threshold: 0,
+        rootMargin:"-30% 0px -60% 0px",
+        threshold:0
       }
     );
 
-    links.forEach((link) => {
-      const section = document.getElementById(link.id);
-      if (section) observer.observe(section);
+
+
+    links.forEach((link)=>{
+
+      const section =
+      document.getElementById(link.id);
+
+
+      if(section){
+        observer.observe(section);
+      }
+
     });
 
-    return () => observer.disconnect();
+
+
+    return ()=>observer.disconnect();
+
+
   }, []);
+
+
+
+
+  // Smooth scroll function
+  const handleScrollTo = (
+    e,
+    id
+  )=>{
+
+    e.preventDefault();
+
+
+    const section =
+    document.getElementById(id);
+
+
+    if(section){
+
+      isScrolling.current = true;
+
+      setActiveSection(id);
+
+      setOpen(false);
+
+
+      const offset = 90;
+
+
+      const position =
+      section.getBoundingClientRect().top +
+      window.scrollY -
+      offset;
+
+
+
+      window.scrollTo({
+
+        top:position,
+
+        behavior:"smooth"
+
+      });
+
+
+
+      setTimeout(()=>{
+
+        isScrolling.current=false;
+
+      },800);
+
+    }
+
+  };
+
+
+
+
+  // Close menu on resize
+  useEffect(()=>{
+
+    const resize = ()=>{
+
+      if(window.innerWidth >= 1024){
+
+        setOpen(false);
+
+      }
+
+    };
+
+
+    window.addEventListener(
+      "resize",
+      resize
+    );
+
+
+    return ()=>{
+
+      window.removeEventListener(
+        "resize",
+        resize
+      );
+
+    };
+
+
+  },[]);
+
+
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b ${
-        scrolled
-          ? "bg-[#0B1120]/80 backdrop-blur-md border-white/5"
-          : "bg-transparent border-transparent"
-      }`}
+      className={`
+      fixed
+      top-0
+      left-0
+      w-full
+      z-[10000]
+      transition-all
+      duration-300
+      ${
+        scrolled || open
+        ?
+        "bg-[#0B1120]/95 backdrop-blur-xl border-b border-white/10"
+        :
+        "bg-transparent"
+      }
+      `}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+            <div
+        className="
+        max-w-7xl
+        mx-auto
+        px-4
+        sm:px-6
+        lg:px-8
+        h-16
+        sm:h-20
+        flex
+        items-center
+        justify-between
+        "
+      >
 
-        {/* Logo */}
-        <a href="#home" className="group">
+        {/* LOGO */}
+
+        <a
+          href="#home"
+          onClick={(e)=>handleScrollTo(e,"home")}
+        >
+
           <img
             src="/logoo.png"
-            alt="Codelyx Logo"
+            alt="Logo"
             className="
-              h-10 
-              sm:h-12 
-              md:h-16
-              w-auto
-              object-contain
-              transition-transform duration-300
-              group-hover:scale-110
+            h-10
+            sm:h-12
+            lg:h-16
+            w-auto
+            object-contain
+            hover:scale-105
+            transition
             "
           />
+
         </a>
 
 
-        {/* Desktop */}
-        <nav className="hidden md:flex items-center gap-6">
 
-          <div className="
-            flex items-center 
-            gap-4 lg:gap-6
-            bg-[#111827]/40
-            border border-white/5
-            px-4 lg:px-6
+        {/* DESKTOP MENU */}
+
+        <nav
+          className="
+          hidden
+          lg:flex
+          items-center
+          gap-6
+          "
+        >
+
+          <div
+            className="
+            flex
+            gap-6
+            bg-[#111827]/50
+            border
+            border-white/10
+            px-6
             py-2
             rounded-full
-            backdrop-blur-sm
-          ">
-            {links.map((link) => {
-              const active = activeSection === link.id;
+            backdrop-blur
+            "
+          >
 
-              return (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  className={`
+            {
+              links.map((link)=>{
+
+                const active =
+                activeSection === link.id;
+
+
+                return (
+
+                  <a
+                    key={link.id}
+                    href={link.href}
+                    onClick={(e)=>handleScrollTo(e,link.id)}
+                    className={`
                     relative
-                    text-xs lg:text-sm
+                    text-sm
                     font-medium
-                    py-1
                     transition
                     ${
                       active
-                        ? "text-blue-400"
-                        : "text-gray-400 hover:text-white"
+                      ?
+                      "text-blue-400"
+                      :
+                      "text-gray-400 hover:text-white"
                     }
-                  `}
-                >
-                  {link.name}
+                    `}
+                  >
 
-                  {active && (
-                    <motion.span
-                      layoutId="nav"
-                      className="
-                        absolute
-                        bottom-0
-                        left-0
-                        right-0
-                        h-[2px]
-                        bg-blue-500
-                        rounded-full
-                      "
-                    />
-                  )}
+                    {link.name}
 
-                </a>
-              );
-            })}
+
+                    {
+                      active && (
+
+                        <motion.span
+                          layoutId="active"
+                          className="
+                          absolute
+                          left-0
+                          right-0
+                          -bottom-1
+                          h-[2px]
+                          bg-blue-500
+                          rounded-full
+                          "
+                        />
+
+                      )
+                    }
+
+
+                  </a>
+
+                );
+
+              })
+            }
+
           </div>
+
 
 
           <a
             href="#contact"
+            onClick={(e)=>handleScrollTo(e,"contact")}
             className="
-              bg-blue-600
-              hover:bg-blue-500
-              text-white
-              text-sm
-              font-semibold
-              px-5
-              py-2.5
-              rounded-full
-              transition
-              hover:scale-105
+            bg-blue-600
+            hover:bg-blue-500
+            text-white
+            px-6
+            py-2.5
+            rounded-full
+            font-semibold
+            text-sm
+            transition
             "
           >
             Let's Talk
           </a>
 
+
         </nav>
 
 
 
-        {/* Mobile Button */}
+
+
+        {/* MOBILE BUTTON */}
+
         <button
-          onClick={() => setOpen(!open)}
+          onClick={()=>setOpen(!open)}
           className="
-            md:hidden
-            text-2xl
-            text-gray-300
-            bg-[#111827]/70
-            border
-            border-white/10
-            p-2
-            rounded-xl
+          lg:hidden
+          text-3xl
+          text-gray-300
+          bg-[#111827]/70
+          border
+          border-white/10
+          p-2
+          rounded-xl
+          cursor-pointer
           "
           aria-label="menu"
         >
-          {open ? <HiX /> : <HiMenu />}
+
+          {
+            open
+            ?
+            <HiX/>
+            :
+            <HiMenu/>
+          }
+
         </button>
+
 
       </div>
 
 
 
-      {/* Mobile Menu */}
+
+
+      {/* MOBILE MENU */}
+
 
       <AnimatePresence>
 
-        {open && (
+        {
+          open && (
 
-          <motion.div
-            initial={{opacity:0,height:0}}
-            animate={{opacity:1,height:"auto"}}
-            exit={{opacity:0,height:0}}
-            className="
-              md:hidden
+            <motion.div
+
+              initial={{
+                opacity:0,
+                y:-20
+              }}
+
+              animate={{
+                opacity:1,
+                y:0
+              }}
+
+              exit={{
+                opacity:0,
+                y:-20
+              }}
+
+              transition={{
+                duration:.25
+              }}
+
+              className="
+              lg:hidden
+              absolute
+              top-full
+              left-0
+              w-full
+              z-[9999]
               bg-[#0B1120]/95
               backdrop-blur-xl
               border-t
               border-white/10
-            "
-          >
+              "
 
-            <div className="px-5 py-5 flex flex-col gap-3">
+            >
 
-              {links.map((link)=>(
+
+              <div
+                className="
+                flex
+                flex-col
+                gap-2
+                px-5
+                py-6
+                "
+              >
+
+
+                {
+                  links.map((link)=>{
+
+
+                    const active =
+                    activeSection === link.id;
+
+
+
+                    return (
+
+                      <a
+                        key={link.id}
+                        href={link.href}
+                        onClick={(e)=>handleScrollTo(e,link.id)}
+                        className={`
+                        block
+                        w-full
+                        px-4
+                        py-3
+                        rounded-xl
+                        text-base
+                        transition
+                        ${
+                          active
+                          ?
+                          "text-blue-400 bg-blue-500/10"
+                          :
+                          "text-gray-300 hover:text-white hover:bg-white/5"
+                        }
+                        `}
+                      >
+
+                        {link.name}
+
+                      </a>
+
+                    );
+
+
+                  })
+                }
+
+
 
                 <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={()=>setOpen(false)}
+                  href="#contact"
+                  onClick={(e)=>handleScrollTo(e,"contact")}
                   className="
-                    text-gray-300
-                    hover:text-white
-                    py-3
-                    text-base
-                    border-b
-                    border-white/5
-                  "
-                >
-                  {link.name}
-                </a>
-
-              ))}
-
-
-              <a
-                href="#contact"
-                onClick={()=>setOpen(false)}
-                className="
                   mt-3
                   text-center
                   bg-blue-600
+                  hover:bg-blue-500
                   text-white
                   py-3
                   rounded-xl
                   font-semibold
-                "
-              >
-                Let's Talk
-              </a>
+                  transition
+                  "
+                >
+
+                  Let's Talk
+
+                </a>
 
 
-            </div>
 
-          </motion.div>
+              </div>
 
-        )}
+
+            </motion.div>
+
+          )
+        }
+
 
       </AnimatePresence>
 
 
     </header>
+
   );
+
 }

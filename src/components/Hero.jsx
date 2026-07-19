@@ -74,14 +74,14 @@ export default function Hero() {
       {/* Glow 1 */}
       <motion.div
         animate={{
-          x:[0,40,-20,0],
-          y:[0,-50,30,0],
-          scale:[1,1.1,.95,1]
+          x: [0, 40, -20, 0],
+          y: [0, -50, 30, 0],
+          scale: [1, 1.1, .95, 1]
         }}
         transition={{
-          duration:15,
-          repeat:Infinity,
-          ease:"easeInOut"
+          duration: 15,
+          repeat: Infinity,
+          ease: "easeInOut"
         }}
         className="
         absolute 
@@ -99,14 +99,14 @@ export default function Hero() {
       {/* Glow 2 */}
       <motion.div
         animate={{
-          x:[0,-40,30,0],
-          y:[0,40,-50,0],
-          scale:[1,.9,1.1,1]
+          x: [0, -40, 30, 0],
+          y: [0, 40, -50, 0],
+          scale: [1, .9, 1.1, 1]
         }}
         transition={{
-          duration:18,
-          repeat:Infinity,
-          ease:"easeInOut"
+          duration: 18,
+          repeat: Infinity,
+          ease: "easeInOut"
         }}
         className="
         absolute 
@@ -154,15 +154,15 @@ export default function Hero() {
           <motion.div
             variants={itemVariants}
             animate={{
-              boxShadow:[
+              boxShadow: [
                 "0 0 0px #3b82f6",
                 "0 0 25px #3b82f6",
                 "0 0 0px #3b82f6"
               ]
             }}
             transition={{
-              duration:2,
-              repeat:Infinity
+              duration: 2,
+              repeat: Infinity
             }}
             className="
             inline-flex 
@@ -216,7 +216,7 @@ export default function Hero() {
             Building Modern{" "}
 
             <span
-            className="
+              className="
             bg-gradient-to-r 
             from-blue-400 
             via-sky-400 
@@ -285,11 +285,11 @@ export default function Hero() {
             <motion.a
               href="#projects"
               whileHover={{
-                scale:1.08,
-                boxShadow:"0 0 35px #2563eb"
+                scale: 1.08,
+                boxShadow: "0 0 35px #2563eb"
               }}
               whileTap={{
-                scale:.95
+                scale: .95
               }}
               className="
               bg-blue-600 
@@ -307,7 +307,7 @@ export default function Hero() {
 
               View Projects
 
-              <FaArrowRight/>
+              <FaArrowRight />
 
             </motion.a>
 
@@ -316,7 +316,7 @@ export default function Hero() {
             <motion.a
               href="#contact"
               whileHover={{
-                scale:1.05
+                scale: 1.05
               }}
               className="
               px-8 
@@ -356,12 +356,15 @@ export default function Hero() {
             <motion.a
               variants={iconAnimation}
               href="https://github.com/zaidmariam"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cursor-pointer hover:text-white transition-colors duration-300"
               whileHover={{
-                y:-8,
-                scale:1.2
+                y: -8,
+                scale: 1.2
               }}
             >
-              <FaGithub/>
+              <FaGithub />
             </motion.a>
 
 
@@ -369,12 +372,15 @@ export default function Hero() {
             <motion.a
               variants={iconAnimation}
               href="https://instagram.com/codelyx.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cursor-pointer hover:text-[#E1306C] transition-colors duration-300"
               whileHover={{
-                y:-8,
-                scale:1.2
+                y: -8,
+                scale: 1.2
               }}
             >
-              <FaInstagram/>
+              <FaInstagram />
             </motion.a>
 
           </motion.div>

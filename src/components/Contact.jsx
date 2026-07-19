@@ -114,171 +114,178 @@ export default function Contact() {
 
         <div className="grid lg:grid-cols-2 gap-10">
           {/* LEFT CARD */}
-<motion.div
-  initial={{ opacity: 0, x: -30 }}
-  whileInView={{ opacity: 1, x: 0 }}
-  viewport={{ once: true }}
-  transition={{ duration: 0.6 }}
-  className="bg-[#111827]/60 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col justify-between"
->
-  <div>
-    <h3 className="text-2xl font-bold mb-8">
-      Contact Information
-    </h3>
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="bg-[#111827]/60 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col justify-between"
+          >
+            <div>
+              <h3 className="text-2xl font-bold mb-8">
+                Contact Information
+              </h3>
 
-    <div className="space-y-7">
+              <div className="space-y-7">
 
-  {/* Email */}
-  <div className="flex items-center gap-5">
-    <div className="h-14 w-14 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-400">
-      <Mail size={22} />
-    </div>
+                {/* Email */}
+                <a
+                  href="mailto:codelyx.dev@gmail.com"
+                  className="flex items-center gap-5 hover:translate-x-1 transition group cursor-pointer"
+                >
+                  <div className="h-14 w-14 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-400 group-hover:bg-blue-500/20 transition-all duration-300">
+                    <Mail size={22} />
+                  </div>
 
-    <div>
-      <p className="text-gray-500 text-sm">Email</p>
-      <p className="font-semibold">codelyx.dev@gmail.com</p>
-    </div>
-  </div>
+                  <div>
+                    <p className="text-gray-500 text-sm">Email</p>
+                    <p className="font-semibold group-hover:text-blue-400 transition-colors duration-300">codelyx.dev@gmail.com</p>
+                  </div>
+                </a>
 
-  {/* Phone */}
-  <div className="flex items-center gap-5">
-    <div className="h-14 w-14 rounded-2xl bg-sky-500/10 flex items-center justify-center text-sky-400">
-      <Phone size={22} />
-    </div>
+                {/* Phone */}
+                <a
+                  href="tel:+212718144877"
+                  className="flex items-center gap-5 hover:translate-x-1 transition group cursor-pointer"
+                >
+                  <div className="h-14 w-14 rounded-2xl bg-sky-500/10 flex items-center justify-center text-sky-400 group-hover:bg-sky-500/20 transition-all duration-300">
+                    <Phone size={22} />
+                  </div>
 
-    <div>
-      <p className="text-gray-500 text-sm">Phone</p>
-      <p className="font-semibold">+212 718-144877</p>
-    </div>
-  </div>
-  {/* GitHub */}
-  <a
-    href="https://github.com/zaidmariam"
-    target="_blank"
-    rel="noreferrer"
-    className="flex items-center gap-5 hover:translate-x-1 transition"
-  >
-    <div className="h-14 w-14 rounded-2xl bg-white/5 flex items-center justify-center text-white">
-      <FaGithub size={22} />
-    </div>
+                  <div>
+                    <p className="text-gray-500 text-sm">Phone</p>
+                    <p className="font-semibold group-hover:text-sky-400 transition-colors duration-300">+212 718-144877</p>
+                  </div>
+                </a>
 
-    <div>
-      <p className="text-gray-500 text-sm">GitHub</p>
-      <p className="font-semibold">github.com/zaidmariam</p>
-    </div>
-  </a>
+                {/* GitHub */}
+                <a
+                  href="https://github.com/zaidmariam"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-5 hover:translate-x-1 transition group cursor-pointer"
+                >
+                  <div className="h-14 w-14 rounded-2xl bg-white/5 flex items-center justify-center text-white group-hover:bg-white/10 transition-all duration-300">
+                    <FaGithub size={22} />
+                  </div>
 
-  {/* Instagram */}
-  <a
-    href="https://instagram.com/codelyx.dev"
-    target="_blank"
-    rel="noreferrer"
-    className="flex items-center gap-5 hover:translate-x-1 transition"
-  >
-    <div className="h-14 w-14 rounded-2xl bg-pink-500/10 flex items-center justify-center text-pink-400">
-      <FaInstagram size={22} />
-    </div>
+                  <div>
+                    <p className="text-gray-500 text-sm">GitHub</p>
+                    <p className="font-semibold group-hover:text-white transition-colors duration-300">github.com/zaidmariam</p>
+                  </div>
+                </a>
 
-    <div>
-      <p className="text-gray-500 text-sm">Instagram</p>
-      <p className="font-semibold">@codelyx.dev</p>
-    </div>
-  </a>
+                {/* Instagram */}
+                <a
+                  href="https://instagram.com/codelyx.dev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-5 hover:translate-x-1 transition group cursor-pointer"
+                >
+                  <div className="h-14 w-14 rounded-2xl bg-pink-500/10 flex items-center justify-center text-pink-400 group-hover:bg-pink-500/20 transition-all duration-300">
+                    <FaInstagram size={22} />
+                  </div>
 
-</div>
-  </div>
-</motion.div>
+                  <div>
+                    <p className="text-gray-500 text-sm">Instagram</p>
+                    <p className="font-semibold group-hover:text-[#E1306C] transition-colors duration-300">@codelyx.dev</p>
+                  </div>
+                </a>
 
-{/* RIGHT CARD */}
-<motion.div
-  initial={{ opacity: 0, x: 30 }}
-  whileInView={{ opacity: 1, x: 0 }}
-  viewport={{ once: true }}
-  transition={{ duration: 0.6 }}
-  className="bg-[#111827]/60 backdrop-blur-xl border border-white/10 rounded-3xl p-8"
->
-  <form
-    ref={formRef}
-    onSubmit={handleSubmit}
-    className="space-y-6"
-  >
+              </div>
+            </div>
+          </motion.div>
 
-    <input
-      type="text"
-      name="name"
-      placeholder="Your Name"
-      value={formData.name}
-      onChange={handleChange}
-      className="w-full bg-[#0B1120] border border-white/10 rounded-xl px-5 py-4 outline-none focus:border-blue-500"
-      required
-    />
+          {/* RIGHT CARD */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="bg-[#111827]/60 backdrop-blur-xl border border-white/10 rounded-3xl p-8"
+          >
+            <form
+              ref={formRef}
+              onSubmit={handleSubmit}
+              className="space-y-6"
+            >
 
-    <input
-      type="email"
-      name="email"
-      placeholder="Email Address"
-      value={formData.email}
-      onChange={handleChange}
-      className="w-full bg-[#0B1120] border border-white/10 rounded-xl px-5 py-4 outline-none focus:border-blue-500"
-      required
-    />
+              <input
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full bg-[#0B1120] border border-white/10 rounded-xl px-5 py-4 outline-none focus:border-blue-500"
+                required
+              />
+
+              <input
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full bg-[#0B1120] border border-white/10 rounded-xl px-5 py-4 outline-none focus:border-blue-500"
+                required
+              />
 
 
-    <textarea
-      rows="6"
-      name="message"
-      placeholder="Write your message..."
-      value={formData.message}
-      onChange={handleChange}
-      className="w-full resize-none bg-[#0B1120] border border-white/10 rounded-xl px-5 py-4 outline-none focus:border-blue-500"
-      required
-    />
-        <motion.button
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      type="submit"
-      disabled={status === "sending"}
-      className="w-full bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800 transition-all duration-300 rounded-xl py-4 font-semibold flex items-center justify-center gap-3 shadow-[0_0_25px_rgba(59,130,246,0.25)]"
-    >
-      {status === "sending" ? (
-        <>
-          <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
-          Sending...
-        </>
-      ) : (
-        <>
-          <Send size={18} />
-          Send Message
-        </>
-      )}
-    </motion.button>
+              <textarea
+                rows="6"
+                name="message"
+                placeholder="Write your message..."
+                value={formData.message}
+                onChange={handleChange}
+                className="w-full resize-none bg-[#0B1120] border border-white/10 rounded-xl px-5 py-4 outline-none focus:border-blue-500"
+                required
+              />
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                type="submit"
+                disabled={status === "sending"}
+                className="w-full bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800 transition-all duration-300 rounded-xl py-4 font-semibold flex items-center justify-center gap-3 shadow-[0_0_25px_rgba(59,130,246,0.25)]"
+              >
+                {status === "sending" ? (
+                  <>
+                    <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send size={18} />
+                    Send Message
+                  </>
+                )}
+              </motion.button>
 
-    {/* Success Message */}
-    <AnimatePresence>
-      {status === "success" && (
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 15 }}
-          className="mt-6 rounded-xl bg-emerald-500/10 border border-emerald-500/30 p-4 flex items-center gap-3"
-        >
-          <FaCheckCircle className="text-emerald-400 text-xl" />
+              {/* Success Message */}
+              <AnimatePresence>
+                {status === "success" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 15 }}
+                    className="mt-6 rounded-xl bg-emerald-500/10 border border-emerald-500/30 p-4 flex items-center gap-3"
+                  >
+                    <FaCheckCircle className="text-emerald-400 text-xl" />
 
-          <div>
-            <h4 className="font-semibold text-emerald-400">
-              Message Sent Successfully
-            </h4>
+                    <div>
+                      <h4 className="font-semibold text-emerald-400">
+                        Message Sent Successfully
+                      </h4>
 
-            <p className="text-sm text-gray-300">
-              Thank you! I'll get back to you as soon as possible.
-            </p>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+                      <p className="text-sm text-gray-300">
+                        Thank you! I'll get back to you as soon as possible.
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-  </form>
-</motion.div>
+            </form>
+          </motion.div>
 
         </div>
       </div>
@@ -290,11 +297,10 @@ export default function Contact() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 40 }}
-            className={`fixed bottom-6 right-6 px-6 py-4 rounded-2xl shadow-xl backdrop-blur-lg border z-50 ${
-              toast.type === "success"
+            className={`fixed bottom-6 right-6 px-6 py-4 rounded-2xl shadow-xl backdrop-blur-lg border z-50 ${toast.type === "success"
                 ? "bg-emerald-500/15 border-emerald-500/30 text-emerald-300"
                 : "bg-red-500/15 border-red-500/30 text-red-300"
-            }`}
+              }`}
           >
             {toast.message}
           </motion.div>
