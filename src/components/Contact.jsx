@@ -89,7 +89,7 @@ export default function Contact() {
       <div className="absolute left-0 bottom-0 w-[450px] h-[450px] rounded-full bg-blue-500/5 blur-[150px]" />
       <div className="absolute right-0 top-0 w-[450px] h-[450px] rounded-full bg-sky-500/5 blur-[150px]" />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 relative z-10">
 
         <motion.div
           initial={{ opacity: 0, y: 25 }}
@@ -119,7 +119,7 @@ export default function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="bg-[#111827]/60 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col justify-between"
+            className="w-full bg-[#111827]/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col justify-between"
           >
             <div>
               <h3 className="text-2xl font-bold mb-8">
@@ -202,7 +202,7 @@ export default function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="bg-[#111827]/60 backdrop-blur-xl border border-white/10 rounded-3xl p-8"
+            className="w-full bg-[#111827]/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-8"
           >
             <form
               ref={formRef}
