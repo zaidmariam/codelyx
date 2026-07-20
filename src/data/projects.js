@@ -13,7 +13,7 @@ export const projects = [
     title: "Personal Portfolio Website",
     description:
       "A modern and responsive personal portfolio showcasing my skills, projects, and experience. Built with smooth animations, clean UI, and optimized performance.",
-    image: "/projects/portfolio1.png",
+    image: "/projects/portfolio.png",
     technologies: ["React", "Next.js", "Tailwind CSS"],
     github: "https://github.com/zaidmariam/Personal-Portfolio-",
   },
