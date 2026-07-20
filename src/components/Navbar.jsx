@@ -220,21 +220,20 @@ activeSection===link.id
 
 <button
   onClick={() => setOpen(!open)}
-  className="
-    lg:hidden
-    relative
-    z-[100001]
-    flex
-    items-center
-    justify-center
-    text-4xl
-    text-white
-    bg-[#111827]
-    border
-    border-white/10
-    p-3
-    rounded-xl
--translate-x-6  "
+ className="
+lg:hidden
+ml-auto
+flex
+items-center
+justify-center
+text-4xl
+text-white
+bg-[#111827]
+border
+border-white/10
+p-3
+rounded-xl
+"
 >
   {open ? <HiX /> : <HiMenu />}
 </button>
